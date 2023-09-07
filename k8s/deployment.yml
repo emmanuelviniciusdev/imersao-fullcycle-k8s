@@ -17,7 +17,22 @@ spec:
     spec:
       containers:
         - name: goserver
-          image: emmanuelviniciusdev/imersao-fullcycle-k8s-hello-k8s:v8
+          image: emmanuelviniciusdev/imersao-fullcycle-k8s-hello-k8s:v10
+
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: "healthz"
+            failureThreshold: 1
+
+#          livenessProbe:
+#            httpGet:
+#              port: 8080
+#              path: "healthz"
+#            successThreshold: 1
+#            failureThreshold: 1
+#            timeoutSeconds: 1
+
           envFrom:
             - configMapRef:
                 name: goserver-configmap

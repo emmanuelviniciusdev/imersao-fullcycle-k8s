@@ -4,14 +4,33 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
+
+var startedAt = time.Now()
 
 func main() {
 	http.HandleFunc("/", RootRequestHandler)
 	http.HandleFunc("/most-adorable-countries-on-the-planet", MostAdorableCountriesOnThePlanetRequestHandler)
 	http.HandleFunc("/secrets", SecretsRequestHandler)
+	http.HandleFunc("/healthz", HealthzRequestHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+func HealthzRequestHandler(w http.ResponseWriter, r *http.Request) {
+	uptime := time.Since(startedAt)
+
+	statusCode := 204
+
+	//livenessProbeError := uptime.Seconds() > 25
+	readinessProbeError := uptime.Seconds() < 25
+
+	if readinessProbeError {
+		statusCode = 500
+	}
+
+	w.WriteHeader(statusCode)
 }
 
 func SecretsRequestHandler(w http.ResponseWriter, r *http.Request) {
