@@ -17,10 +17,12 @@ spec:
     spec:
       containers:
         - name: goserver
-          image: emmanuelviniciusdev/imersao-fullcycle-k8s-hello-k8s:v6
+          image: emmanuelviniciusdev/imersao-fullcycle-k8s-hello-k8s:v8
           envFrom:
             - configMapRef:
                 name: goserver-configmap
+            - secretRef:
+                name: goserver-secret
           volumeMounts:
             - mountPath: "/go/src/app/countries"
               name: volume-countries

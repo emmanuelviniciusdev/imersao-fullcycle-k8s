@@ -9,8 +9,18 @@ import (
 func main() {
 	http.HandleFunc("/", RootRequestHandler)
 	http.HandleFunc("/most-adorable-countries-on-the-planet", MostAdorableCountriesOnThePlanetRequestHandler)
+	http.HandleFunc("/secrets", SecretsRequestHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+func SecretsRequestHandler(w http.ResponseWriter, r *http.Request) {
+	listSecret := [...]string{os.Getenv("SECRET_1"), os.Getenv("SECRET_2"), os.Getenv("SECRET_3")}
+
+	for _, secret := range listSecret {
+		w.Write([]byte(secret))
+		w.Write([]byte("\n"))
+	}
 }
 
 func MostAdorableCountriesOnThePlanetRequestHandler(w http.ResponseWriter, r *http.Request) {
