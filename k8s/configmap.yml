@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: goserver-configmap
+data:
+  NAME: "EMMANUEL"
+  WISH: "NO more wars !! I hate wars ☮"

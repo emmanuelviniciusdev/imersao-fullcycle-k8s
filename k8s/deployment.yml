@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: goserver
-  replicas: 10
+  replicas: 1
   template:
     metadata:
       name: goserver
@@ -17,4 +17,18 @@ spec:
     spec:
       containers:
         - name: goserver
-          image: emmanuelviniciusdev/imersao-fullcycle-k8s-hello-k8s:v3
+          image: emmanuelviniciusdev/imersao-fullcycle-k8s-hello-k8s:v4
+          envFrom:
+            - configMapRef:
+                name: goserver-configmap
+#          env:
+#            - name: NAME
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: goserver-configmap
+#                  key: NAME
+#            - name: WISH
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: goserver-configmap
+#                  key: WISH
