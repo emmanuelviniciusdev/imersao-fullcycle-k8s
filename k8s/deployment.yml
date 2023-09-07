@@ -17,18 +17,17 @@ spec:
     spec:
       containers:
         - name: goserver
-          image: emmanuelviniciusdev/imersao-fullcycle-k8s-hello-k8s:v4
+          image: emmanuelviniciusdev/imersao-fullcycle-k8s-hello-k8s:v6
           envFrom:
             - configMapRef:
                 name: goserver-configmap
-#          env:
-#            - name: NAME
-#              valueFrom:
-#                configMapKeyRef:
-#                  name: goserver-configmap
-#                  key: NAME
-#            - name: WISH
-#              valueFrom:
-#                configMapKeyRef:
-#                  name: goserver-configmap
-#                  key: WISH
+          volumeMounts:
+            - mountPath: "/go/src/app/countries"
+              name: volume-countries
+      volumes:
+        - name: volume-countries
+          configMap:
+            name: goserver-configmap-countries
+            items:
+              - key: countries
+                path: "countries.txt"
