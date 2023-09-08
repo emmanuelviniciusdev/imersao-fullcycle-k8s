@@ -19,11 +19,19 @@ spec:
         - name: goserver
           image: emmanuelviniciusdev/imersao-fullcycle-k8s-hello-k8s:v10
 
-          readinessProbe:
-            httpGet:
-              port: 8080
-              path: "healthz"
-            failureThreshold: 1
+          resources:
+            requests:
+              cpu: "0.05"
+              memory: 20Mi
+            limits:
+              cpu: "0.05"
+              memory: 25Mi
+
+#          readinessProbe:
+#            httpGet:
+#              port: 8080
+#              path: "healthz"
+#            failureThreshold: 1
 
 #          livenessProbe:
 #            httpGet:

@@ -1,0 +1,15 @@
+# Comando para rodar o fortio:
+# kubectl run -it fortio --rm --image=fortio/fortio -- load -qps 800 -t 240s -c 70 "http://goserver-service-clusterip:8080/healthz"
+
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: goserver-hpa
+spec:
+  minReplicas: 1
+  maxReplicas: 30
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: goserver
+  targetCPUUtilizationPercentage: 25
