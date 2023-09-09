@@ -47,9 +47,14 @@ spec:
             - secretRef:
                 name: goserver-secret
           volumeMounts:
+            - mountPath: "/go/src/app/goserver-pvc"
+              name: goserver-volume
             - mountPath: "/go/src/app/countries"
               name: volume-countries
       volumes:
+        - name: goserver-volume
+          persistentVolumeClaim:
+            claimName: goserver-pvc
         - name: volume-countries
           configMap:
             name: goserver-configmap-countries
