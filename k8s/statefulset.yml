@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mysql
 spec:
-  serviceName: pod-mysql
+  serviceName: mysql-service-headless
   replicas: 3
 #  podManagementPolicy: Parallel
   selector:
@@ -22,3 +22,15 @@ spec:
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: root
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-volume
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100M
